@@ -1,13 +1,13 @@
-package com.siri;
+package com.siri.memo;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -18,8 +18,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 public class SimpleNotePad extends JFrame implements ActionListener {
-
-	// 메모장이라 텍스트 파일만 읽어온다.
 
 	JTextArea ta;
 	JScrollPane scroll_ta;
@@ -70,45 +68,66 @@ public class SimpleNotePad extends JFrame implements ActionListener {
 		item_exit.addActionListener(this);
 	}// 생성자
 
-	// FROM: 파일 --> to: TextArea FileReader 입력
+	// FROM(읽기객체): 파일 ------> TO : TextArea
 	public void openFile() {
-		chooser.showOpenDialog(this);
-
+		// chooser.showOpenDialog(Component parent)
+		// parent: 대화상자를 누구 위에서 보일지!!
+		int t = chooser.showOpenDialog(this);// 열기 대화상자
+		// 힌트: 1. showOpenDialog()메소드의 리턴 확인
+		// 2. chooser.getSelectedFile()메소드 사용
 		try {
-			FileReader fr = new FileReader(chooser.getSelectedFile());
-//			BufferedReader br= new BufferedReader(fr);
-//			ta.append(br.readLine());
+			if (t == JFileChooser.APPROVE_OPTION) {
+				// 읽기
+				File f = chooser.getSelectedFile();
+				FileReader fr = new FileReader(chooser.getSelectedFile());
+				BufferedReader br = new BufferedReader(fr);
+				String rl = br.readLine();
 
-			char[] ch = new char[512];
-			// char로 하는게 속도가 빠르다. 방을 한번에 만들어서 1000개 글자의 경우 for문을 두번만 실행하면 되니까
-			String change = "";
-
-			int i;
-			while ((i = fr.read()) != -1) {
-				// String str= new String(ch,0,i);ch를 0번째 부터 i번째까지 돌자.
-				change = change + Character.toString((char) i);
-				ta.setText(change);
+				// 쓰기
+				// readLine은 읽을 라인이 없다면 null
+				// read() 읽을 문자가 없다면 -1을 리턴
+				String fileName = f.getName();
+				setTitle("자바메모장 -[" + fileName + "]");
+				ta.append("");
+				while (rl != null) {
+					ta.append(br.readLine() + "\n");
+				}
+				br.close();
+				fr.close();
 			}
-			fr.close();
 
-		} catch (Exception e) {
-			System.out.println("파일이 없습니다.");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 	}
-	
 
-	// FROM: TextArea --> to: 파일 FileWriter, area getText
+	// FROM: TextArea ta ----> TO(쓰기객체) : 파일
+	// FileOutputStream, FileWriter fw
+	// 특징: 파일을 새롭게 생성한다.
+
+	// String str = ta.getText()
 	public void saveFile() {
-		chooser.showSaveDialog(this);
-
+		// chooser.showSaveDialog(Component parent)
+		int t = chooser.showSaveDialog(this);// 저장 대화상자
+		// 0은 파일저장, 1은 취소버튼
 		try {
-			FileWriter fw = new FileWriter(chooser.getSelectedFile());
-			fw.write(ta.getText());
-			System.out.println("저장까지 ");
-			fw.close();
-		} catch (Exception e) {
-			System.out.println("IO에러에용");
+			if (t == JFileChooser.APPROVE_OPTION) {
+
+				// 데이터 얻기
+				String str = ta.getText();
+
+				// 저장된 경로와 파일명 얻기
+				File f = chooser.getSelectedFile();// 저장 대화상자에 선택된 경로와 파일명을 얻기
+				FileWriter fw = new FileWriter(f);
+
+				// 데이터 쓰기
+				fw.write(str);
+				fw.close();
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
