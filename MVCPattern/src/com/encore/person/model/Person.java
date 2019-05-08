@@ -1,6 +1,7 @@
 package com.encore.person.model;
 
 public class Person {
+	
 	// ÀÚ¹Ùºó
 	private int no;
 	private String name;
@@ -13,6 +14,7 @@ public class Person {
 
 	public Person(int no, String name, int age, String job) {
 		super();
+		
 		this.no = no;
 		this.name = name;
 		this.age = age;
