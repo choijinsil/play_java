@@ -19,6 +19,7 @@ public class Server implements Runnable {
 		v = new Vector<Service>();
 		try {
 			ss = new ServerSocket(3000); // 1. 서버소켓객체생성
+
 			new Thread(this).start();
 		} catch (IOException e) {
 			// binding Exception이 날 확률이 높다.
@@ -36,7 +37,6 @@ public class Server implements Runnable {
 				v.add(serv);
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	} // 외부 run
@@ -44,6 +44,8 @@ public class Server implements Runnable {
 	// ------------------------------------------------------------------
 	class Service extends Thread { // 내부 클래스: 소켓을 통한 입출력 서비스
 		// ** Service객체 한개 == 클라이언트 한개
+		public static final String CHANGE_NAME = "150";
+
 		BufferedReader in; // 소켓을 통해 읽기
 		OutputStream out; // 소켓에 쓰기
 		String clientAddr;
@@ -64,35 +66,45 @@ public class Server implements Runnable {
 		}
 
 		public void run() { // 클라이언트가 보내는 여러메세지를 일어주는 기능
+			try {
 			while (true) {
-				try {
 					String msg = in.readLine(); // 6. 클라이언트가 tf보낸 메세지, 좋은하루!
+					
 					// msg -> "100|"+홍길동 "200|"안녕하세요
 					// 값을 받아서
 					// 서버 모니터링
 					System.out.println("[" + clientAddr + "]>>>" + msg);
 
-					String[] arr = msg.split("\\|");
-					
+					String arr[] = msg.split("\\|");
+
 					switch (arr[0]) {
-					case "100": // 대화명 전달
+					case "100": // 최초 대화명 전달
+						
 						nickName = arr[1];
+						System.out.println(arr[1]);
+						messageAll("### ["+nickName+"]님이 입장하였습니다.");
+						break;
+
+					case CHANGE_NAME:
+						String oldName = nickName;
+						nickName = arr[1];
+						messageAll("### [" + oldName + "]님이 [" + nickName + "]으로 변경되었습니다.");
 						break;
 
 					case "200":
-						messageAll("[" + arr[0] + "]->" + arr[1]);
+						messageAll("[" + nickName + "]->" + arr[1]);
 						break;
-					
+
 					}
 
 					/*
 					 * for (int i = 0; i < arr.length; i++) { messageAll(arr[i]); }
 					 */
 
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			  }//while
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 
@@ -124,7 +136,7 @@ public class Server implements Runnable {
 			}
 		}
 	}
-	
+
 	// ------------------------------------------------------------------
 	public static void main(String[] args) {
 		new Server();

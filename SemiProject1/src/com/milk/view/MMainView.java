@@ -32,7 +32,7 @@ public class MMainView extends JFrame
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		//1번
+		// 1번
 		JLabel pImgLabel_1 = new JLabel("상품이미지(라벨)");
 		pImgLabel_1.setBounds(40, 90, 100, 140);
 		contentPane.add(pImgLabel_1);
