@@ -6,7 +6,7 @@ import java.io.ObjectOutputStream;
 public class ObjectWriteTest {// 객체 쓰기 테스트
 	public static void main(String[] args) throws Exception {
 
-		FileOutputStream fos = new FileOutputStream("person.ser");
+		FileOutputStream fos = new FileOutputStream("person.txt");
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
 		Person p = new Person();
 		

@@ -1,8 +1,12 @@
 package com.siri;
 
 import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.function.IntConsumer;
+
+import javax.xml.ws.handler.MessageContext.Scope;
 
 public class InetAddressTest {
 
@@ -22,6 +26,10 @@ public class InetAddressTest {
 			System.out.println(ias[i].getHostAddress());
 
 		}
+
+		ServerSocket ss = new ServerSocket(8080);
+		Socket s = ss.accept(); // 클라이언트 접속대기
+
 	}
 
 }

@@ -1,0 +1,83 @@
+
+
+
+<서버>
+- (소켓)클라이언트 접속 대기
+- 클라이언트 한개가  메시지를 쓰면 (while)      
+   ----read()-----> 
+  접속된 모든 클라이언트에게 메시지
+   ----writeAll()---->   
+
+
+public class Server implements Runnable{
+  //외부클래스: 1.소켓을 통한 접속서비스(접속대기)
+  //          2.접속한 클라이언트를 관리(Vector통해)
+	
+   ServerSocket ss;
+   Vector<Service>  v; 
+	
+   public Server() {
+	  
+	  v = new Vector<>();        //접속한 클라이언트 관리
+   	  ss = new ServerSocket(3000);//★1. 서버소켓 객체생성		
+	  new Thread(this).start();  //스레드 호출
+	 
+   }//외부클래스 생성자
+   
+   public void run() {//여러 클라이언트 접속에 대한 대기
+	   
+		while(true) { // 언제들어올지 모르는 접속에 대한 체크
+			 Socket s = ss.accept();//★2. 클라이언트 접속대기  (클라이언트 프로그램: new Socket()과 매핑)
+			 v.add(new Service(s)); //접속한 클라이언트 정보를 벡터에 저장 
+		}
+   }//외부 run
+   
+   //---------------------------------------------------------------------------
+      class Service extends Thread{ // 왜? run()을 참조, 
+         //내부클래스: 소켓을 통한 입출력 서비스
+    	  //※ Service객체 한개 == 클라이언트 한개!!
+    	  
+    	  BufferedReader in;//소켓통해 읽기
+    	  OutputStream out;//소켓에 쓰기
+    	  
+    	  public Service(Socket s) {
+    		 
+				//★4 소켓 입출력 객체 생성 
+				 in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+				 out = s.getOutputStream();
+				 start(); //스레드 호출
+				 
+		  }//내부클래스 생성자
+    	  
+    	  public void run() {//클라이언트가 보내는 여러메시지를 읽어주는 기능
+    		  while(true) {
+				 String msg =in.readLine();//★6. 클라이언트가 tf보낸 메시지 읽기    			
+				 messageAll(msg);//접속된 모든 클라이언트에게 메시지 전송    			
+			  }  
+    	  }//내부run
+    	  
+    	  public void messageTo(String msg) throws IOException {
+    		  out.write(  (msg+"\n").getBytes() );//★7. 실제 클라이언트에게 메시지 보내기
+    	  }//messageTo
+    	  
+    	  public void messageAll(String msg) {
+    	  //접속한 모든 클라이언트에게 메시지 보내기 소켓에선 in.readLine()이 기준이다.
+    		  for(int i=0; i<v.size(); i++) { //전체 클라이언트(Service벡터)
+    			  Service serv = v.get(i);
+    			  try{
+					serv.messageTo(msg);
+				  } catch (IOException e) {
+					  //에러발생  ----> 클라이언트 접속 끊음!!(소켓은 사라졌지만 Service객체가 벡터에존재)
+					  v.remove(i--);//접속끊긴 클라이언트를 벡터에서 삭제!!
+				  }
+    		  }//for
+    		  
+    	  }//messageAll
+    	  
+      }//내부클래스 end
+   //---------------------------------------------------------------------------
+   
+   public static void main(String[] args) {
+	  new Server();
+   }
+}
