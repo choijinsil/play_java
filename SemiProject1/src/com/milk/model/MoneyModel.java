@@ -47,18 +47,20 @@ public class MoneyModel {
 		return db.balance;
 	}
 
-	// 넣은 잔액과 비교해서 잔액보다 크면 전부 true로 불빛 들어오게 하기
+	// 넣은 잔액과 비교해서 잔액보다 크면 전부 true로 불빛 들어오게 하기 siri수정
 	public void compareAll(int money) {
 
 		for (int i = 0; i < db.milkV.size(); i++) {
 
 			if (db.milkV.get(i).getPrice() <= money) {
 				db.milkV.get(i).setOnSale(true);
-				System.out.println(i + " 번 살수있어요!");
+				System.out.println((i +1)+ " 번 살수있어요!");
+				
 			}else {
 				db.milkV.get(i).setOnSale(false);
 			}
 		}
+		System.out.println("----------------------");
 	}
 	// =====================================판매자
 

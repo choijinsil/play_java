@@ -70,7 +70,6 @@ public class Controller implements ActionListener {
 		mainview.returnBtn.addActionListener(this);
 		mainview.productOutBtn.addActionListener(this);
 		mainview.keypadBtn_OK.addActionListener(this);
-
 	}
 
 	@Override
@@ -131,10 +130,11 @@ public class Controller implements ActionListener {
 					milkModel.sellMilk(sellM);
 					moneyModel.minusBalance(sellM);
 
-					PossibleMilk();
-
 					mainview.moneyDisplayArea.setText(db.balance + "");
 					mainview.keyDisplayArea.setText("");
+
+					PossibleMilk();
+
 					updateView();
 					System.out.println("ㅇㅋ"); // 제품 나올 때 제품반환버튼 활성화
 				} else
@@ -158,36 +158,55 @@ public class Controller implements ActionListener {
 	public void PossibleMilk() {
 
 		moneyModel.compareAll(Integer.parseInt(mainview.moneyDisplayArea.getText()));
-		
-		
 
 		for (int i = 0; i < db.milkV.size(); i++) {
 
+			// 내가 가진 돈으로 살수있는 제품들 true
 			if (db.milkV.get(i).isOnSale()) {
 
-				//mainview.pPriceField_+String.valueof(i).setBackground(Color.RED);
-				
-				mainview.pPriceField_1.setBackground(Color.RED);
-				mainview.pPriceField_2.setBackground(Color.RED);
-				mainview.pPriceField_3.setBackground(Color.RED);
-				mainview.pPriceField_4.setBackground(Color.RED);
-				mainview.pPriceField_5.setBackground(Color.RED);
-				mainview.pPriceField_6.setBackground(Color.RED);
-				mainview.pPriceField_7.setBackground(Color.RED);
-				mainview.pPriceField_8.setBackground(Color.RED);
-				mainview.pPriceField_9.setBackground(Color.RED);
+				// mainview.pPriceField_+String.valueof(i).setBackground(Color.RED);
+
+				if (db.milkV.get(i).getNo() - 1 == 0) {
+					mainview.pPriceField_1.setBackground(Color.RED);
+				} else if (db.milkV.get(i).getNo() - 1 == 1) {
+					mainview.pPriceField_2.setBackground(Color.RED);
+				} else if (db.milkV.get(i).getNo() - 1 == 2) {
+					mainview.pPriceField_3.setBackground(Color.RED);
+				} else if (db.milkV.get(i).getNo() - 1 == 3) {
+					mainview.pPriceField_4.setBackground(Color.RED);
+				} else if (db.milkV.get(i).getNo() - 1 == 4) {
+					mainview.pPriceField_5.setBackground(Color.RED);
+				} else if (db.milkV.get(i).getNo() - 1 == 5) {
+					mainview.pPriceField_6.setBackground(Color.RED);
+				} else if (db.milkV.get(i).getNo() - 1 == 6) {
+					mainview.pPriceField_7.setBackground(Color.RED);
+				} else if (db.milkV.get(i).getNo() - 1 == 7) {
+					mainview.pPriceField_8.setBackground(Color.RED);
+				} else if (db.milkV.get(i).getNo() - 1 == 8) {
+					mainview.pPriceField_9.setBackground(Color.RED);
+				}
 
 			} else { // false면
 
-				mainview.pPriceField_1.setBackground(Color.WHITE);
-				mainview.pPriceField_2.setBackground(Color.WHITE);
-				mainview.pPriceField_3.setBackground(Color.WHITE);
-				mainview.pPriceField_4.setBackground(Color.WHITE);
-				mainview.pPriceField_5.setBackground(Color.WHITE);
-				mainview.pPriceField_6.setBackground(Color.WHITE);
-				mainview.pPriceField_7.setBackground(Color.WHITE);
-				mainview.pPriceField_8.setBackground(Color.WHITE);
-				mainview.pPriceField_9.setBackground(Color.WHITE);
+				if (db.milkV.get(i).getNo() - 1 == 0) {
+					mainview.pPriceField_1.setBackground(Color.WHITE);
+				} else if (db.milkV.get(i).getNo() - 1 == 1) {
+					mainview.pPriceField_2.setBackground(Color.WHITE);
+				} else if (db.milkV.get(i).getNo() - 1 == 2) {
+					mainview.pPriceField_3.setBackground(Color.WHITE);
+				} else if (db.milkV.get(i).getNo() - 1 == 3) {
+					mainview.pPriceField_4.setBackground(Color.WHITE);
+				} else if (db.milkV.get(i).getNo() - 1 == 4) {
+					mainview.pPriceField_5.setBackground(Color.WHITE);
+				} else if (db.milkV.get(i).getNo() - 1 == 5) {
+					mainview.pPriceField_6.setBackground(Color.WHITE);
+				} else if (db.milkV.get(i).getNo() - 1 == 6) {
+					mainview.pPriceField_7.setBackground(Color.WHITE);
+				} else if (db.milkV.get(i).getNo() - 1 == 7) {
+					mainview.pPriceField_8.setBackground(Color.WHITE);
+				} else if (db.milkV.get(i).getNo() - 1 == 8) {
+					mainview.pPriceField_9.setBackground(Color.WHITE);
+				}
 			}
 		}
 	}
