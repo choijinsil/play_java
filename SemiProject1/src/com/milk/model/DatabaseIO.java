@@ -1,4 +1,3 @@
-
 package com.milk.model;
 
 import java.io.BufferedReader;
@@ -11,6 +10,8 @@ import java.util.Vector;
 
 public class DatabaseIO {
 	public Vector<Milk> milkV;
+	public int sum;
+	public int balance;
 
 	public DatabaseIO() {
 		milkV = new Vector<Milk>();
@@ -49,7 +50,7 @@ public class DatabaseIO {
 			e.printStackTrace();
 		}
 	}
-	// 벡터에 저장
+
 	public void saveData() {
 		try {
 			File f = new File("Data.txt");
@@ -73,4 +74,32 @@ public class DatabaseIO {
 		}
 	}
 
+	public void loadSum() {
+		try {
+			File f = new File("Sum.txt");
+			// 추후 경로 수정
+
+			FileReader fr = new FileReader(f);
+			BufferedReader br = new BufferedReader(fr);
+			String str = br.readLine();
+			sum = Integer.parseInt(str);
+			br.close();
+			fr.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void saveSum() {
+		try {
+			File f = new File("Sum.txt");
+			FileWriter fw = new FileWriter(f);
+			fw.write(sum + "");
+			fw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

@@ -3,13 +3,16 @@ package com.milk.model;
 import java.util.Vector;
 
 public class MoneyModel {
-	int balance = 0;
+
 	private DatabaseIO db;
 
-	int sum; // sumSales
+	public int sum;// sumSalse
+
+	// public Vector<Milk> milkV;
 
 	public MoneyModel(DatabaseIO db) {
 		this.db = db;
+
 	}
 
 	public MoneyModel() {
@@ -20,35 +23,47 @@ public class MoneyModel {
 	// insert( 100원클릭횟수, 500원 클릭횟수...)
 	public int insert(int cnt100, int cnt500, int cnt1000) {
 
-		
 		int don100 = cnt100 * 100;
 		int don500 = cnt500 * 500;
 		int don1000 = cnt1000 * 1000;
 
-		System.out.println("돈이다.");
-		return balance += (don100 + don500 + don1000);
+		return db.balance += (don100 + don500 + don1000);
 	}
 
-	// 투입된 금액과 제품가격 비교
-	public void priceCompare(int selNo) {
-		for (int i = 0; i < db.milkV.size(); i++) {
-			// 우유가격보다 잔액이 많으면
-			Milk milk = db.milkV.get(i);
-			if (milk.getPrice() <= balance) {
-				balance -= milk.getPrice();
-
-			} else {
-				// 컨트롤러로 보내기
-				System.out.println("잔액이 부족합니다.");
-				return;
-			}
+	// 투입된 금액과 선택된 제품가격 비교
+	public boolean comparePrice(Milk sellM) {
+		if (sellM.getPrice() <= db.balance) {
+			return true;
+		} else {
+			// 컨트롤러로 보내기
+			System.out.println("잔액이 부족합니다.");
+			return false;
 		}
 	}
 
-	// =====================================판매자
-	// 가격 확인
-	public Milk selectPrice(int no) {
+	// 잔액 차감 메소드
+	public int minusBalance(Milk sellM) {
+		db.balance -= sellM.getPrice();
+		return db.balance;
+	}
 
+	// 넣은 잔액과 비교해서 잔액보다 크면 전부 true로 불빛 들어오게 하기
+	public void compareAll(int money) {
+
+		for (int i = 0; i < db.milkV.size(); i++) {
+
+			if (db.milkV.get(i).getPrice() <= money) {
+				db.milkV.get(i).setOnSale(true);
+				System.out.println(i + " 번 살수있어요!");
+			}else {
+				db.milkV.get(i).setOnSale(false);
+			}
+		}
+	}
+	// =====================================판매자
+
+	// 관리자 가격 확인
+	public Milk selectPrice(int no) {
 		for (int i = 0; i < db.milkV.size(); i++) {
 			int vno = db.milkV.get(i).getNo();
 			if (no == vno) {
@@ -59,6 +74,7 @@ public class MoneyModel {
 		return null;
 	}
 
+	// 제품 가격 변경
 	public void updatePrice(Milk milk) {
 		for (int i = 0; i < db.milkV.size(); i++) {
 			Milk oldmilk = db.milkV.get(i);

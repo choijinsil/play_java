@@ -1,3 +1,4 @@
+
 package com.milk.view;
 
 import java.awt.BorderLayout;
@@ -30,6 +31,9 @@ public class MAdmin extends JFrame {
 	public JTextField pStockField_7;
 	public JTextField pStockField_8;
 	public JTextField pStockField_9;
+	public JButton changeSave;
+	public JTextArea pSaleDisplayArea;
+	public JTextArea tSaleDisplayArea;
 
 	public MAdmin() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -287,7 +291,7 @@ public class MAdmin extends JFrame {
 		contentPane.add(tSaleLabel);
 
 		// 총매출 디스플레이
-		JTextArea tSaleDisplayArea = new JTextArea();
+		tSaleDisplayArea = new JTextArea();
 		tSaleDisplayArea.setText("총매출 디스플레이");
 		tSaleDisplayArea.setBounds(460, 240, 170, 55);
 		contentPane.add(tSaleDisplayArea);
@@ -298,7 +302,7 @@ public class MAdmin extends JFrame {
 		contentPane.add(pSaleLabel);
 
 		// 상품별 판매량 디스플레이
-		JTextArea pSaleDisplayArea = new JTextArea();
+		pSaleDisplayArea = new JTextArea();
 		pSaleDisplayArea.setText("상품별 판매량 디스플레이");
 		pSaleDisplayArea.setBounds(460, 330, 170, 237);
 		contentPane.add(pSaleDisplayArea);
@@ -321,7 +325,7 @@ public class MAdmin extends JFrame {
 		contentPane.add(returnBtn);
 
 		// 변경사항 저장
-		JButton changeSave = new JButton("변경사항 저장");
+		changeSave = new JButton("변경사항 저장");
 		changeSave.setBounds(39, 806, 597, 115);
 		contentPane.add(changeSave);
 

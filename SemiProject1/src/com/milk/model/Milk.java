@@ -1,4 +1,3 @@
-
 package com.milk.model;
 
 public class Milk {
@@ -8,12 +7,13 @@ public class Milk {
 	private int price; // 가격
 	private int stock; // 재고
 	private int sell; // 판매량
-	private boolean onSale;
-
+	private boolean onSale; // 제품별 판매중
+	
 	public Milk() {
 		// TODO Auto-generated constructor stub
 	}
-
+	
+	
 	public Milk(int no, String name, int price, int stock, int sell, boolean onSale) {
 		super();
 		this.no = no;
