@@ -1,5 +1,7 @@
 package com.milk.model;
 
+import javax.swing.ImageIcon;
+
 public class MilkModel {
 
 	private DatabaseIO db;
@@ -7,8 +9,8 @@ public class MilkModel {
 	public MilkModel(DatabaseIO db) {
 		this.db = db;
 	}
-	
-	//선택된 제품 확인
+
+	// 선택된 제품 확인
 	public Milk selectStock(int no) {
 		for (int i = 0; i < db.milkV.size(); i++) {
 			Milk oldm = db.milkV.get(i);
@@ -19,7 +21,7 @@ public class MilkModel {
 		return null;
 	}// selectStock
 
-	//재고 개수 수정
+	// 재고 개수 수정
 	public void updateStock(Milk newm) {
 		for (int i = 0; i < db.milkV.size(); i++) {
 			Milk oldm = db.milkV.get(i);
@@ -30,22 +32,32 @@ public class MilkModel {
 		}
 	}// updateStock
 
-	//재고유무확인
+	// 재고유무확인
 	public boolean checkStock(Milk sellM) {
-		if(sellM.getStock() > 0) {
+		if (sellM.getStock() > 0) {
 			return true;
-		}else {
+		} else {
 			return false;
 		}
 	}
-	 
-	//팔린 제품 재고 감소, 판매량 증가
+
+	// 팔린 제품 재고 감소, 판매량 증가
 	public void sellMilk(Milk sellM) {
 		sellM.setStock(sellM.getStock() - 1);
 		sellM.setSell(sellM.getSell() + 1);
 	}
 	
+	//전제 재고유뮤 확인 메소드
+	public boolean checkTotalStock() {
+			int totalStock = 0;
+				for (int i = 0; i < db.milkV.size(); i++) {
+					totalStock += db.milkV.get(i).getStock();
+				}
+				if (totalStock==0) return true;
+				else return false;
+	}
+
 	
-	
+
 
 }// class

@@ -1,20 +1,15 @@
-
 package com.milk.view;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import java.awt.Color;
-import javax.swing.JTextField;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 public class MAdmin extends JFrame {
 
@@ -31,12 +26,14 @@ public class MAdmin extends JFrame {
 	public JTextField pStockField_7;
 	public JTextField pStockField_8;
 	public JTextField pStockField_9;
-	public JButton changeSave;
+	public JButton changeSave,returnBtn, saveFileBtn;
 	public JTextArea pSaleDisplayArea;
 	public JTextArea tSaleDisplayArea;
+	public JTextField coin100Field;
+	public JTextField coin500Field;
 
 	public MAdmin() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 20, 700, 1000);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.GRAY);
@@ -301,6 +298,7 @@ public class MAdmin extends JFrame {
 		pSaleLabel.setBounds(460, 298, 170, 30);
 		contentPane.add(pSaleLabel);
 
+		
 		// 상품별 판매량 디스플레이
 		pSaleDisplayArea = new JTextArea();
 		pSaleDisplayArea.setText("상품별 판매량 디스플레이");
@@ -315,21 +313,53 @@ public class MAdmin extends JFrame {
 		contentPane.add(stopSaleLabel);
 
 		// 장부기재 버튼
-		JButton saveFileBtn = new JButton("장부기재(파일로저장)");
+		saveFileBtn = new JButton("장부기재(파일로저장)");
 		saveFileBtn.setBounds(460, 621, 170, 73);
 		contentPane.add(saveFileBtn);
 
 		// 자판기 제품 구매로 돌아가기
-		JButton returnBtn = new JButton("자판기 구매로 돌아가기");
+		returnBtn = new JButton("자판기 구매로 돌아가기");
 		returnBtn.setBounds(460, 710, 170, 73);
 		contentPane.add(returnBtn);
 
+		
+		//100원
+		JLabel label_100 = new JLabel("");
+		label_100.setIcon(new ImageIcon("image/100원.png"));
+		label_100.setOpaque(false);
+		label_100.setBounds(40, 793, 84, 68);
+		contentPane.add(label_100);
+		
+		//----------------------동전 재고량
+		//100원 재고량 TextField
+		coin100Field = new JTextField();
+		coin100Field.setText("100원 재고량");
+		coin100Field.setColumns(10);
+		coin100Field.setBounds(120, 793, 100, 60);
+		contentPane.add(coin100Field);
+		
+		//500원 재고
+		JLabel label_500 = new JLabel("");
+		label_500.setIcon(new ImageIcon("image/500원.png"));
+		label_500.setOpaque(false);
+		label_500.setBounds(40, 866, 84, 68);
+		contentPane.add(label_500);
+		
+		//500원 재고량 TextField
+		coin500Field = new JTextField();
+		coin500Field.setText("500원 재고량");
+		coin500Field.setColumns(10);
+		coin500Field.setBounds(120, 871, 100, 60);
+		contentPane.add(coin500Field);
+		
+		//-------------------------------
 		// 변경사항 저장
 		changeSave = new JButton("변경사항 저장");
-		changeSave.setBounds(39, 806, 597, 115);
+		changeSave.setBounds(229, 793, 401, 141);
 		contentPane.add(changeSave);
 
-		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+//		setVisible(true);
+//		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 }
