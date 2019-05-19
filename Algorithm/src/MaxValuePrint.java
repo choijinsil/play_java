@@ -29,7 +29,7 @@ public class MaxValuePrint {
 			max = num3;
 
 		System.out.println("최댓값은 " + max + " 입니다.");
-		                       
+
 		su2();
 	}
 
@@ -39,15 +39,25 @@ public class MaxValuePrint {
 		int max = 0;
 
 		for (int i = 0; i < num.length; i++) {
-			
+
 			System.out.print((i + 1) + "번째 값 입력:");
 			num[i] = scan.nextInt();
-			
+
 			if (max < num[i]) {
 				max = num[i];
 			}
 		}
 		System.out.println("최댓값은 " + max + "입니다.");
+	}
+
+	public int maxOf(int i, int j, int k) {
+		int max = i;
+		if (j > max)
+			max = j;
+		if (k > max)
+			max = k;
+
+		return max;
 	}
 
 }

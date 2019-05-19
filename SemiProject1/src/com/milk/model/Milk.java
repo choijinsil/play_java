@@ -7,7 +7,7 @@ public class Milk {
 	private int price; // 가격
 	private int stock; // 재고
 	private int sell; // 판매량
-	private boolean onSale;
+	private boolean onSale; //판매가능여부
 
 	public Milk() {
 		

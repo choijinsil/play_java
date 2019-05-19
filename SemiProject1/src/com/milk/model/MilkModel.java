@@ -19,7 +19,7 @@ public class MilkModel {
 			}
 		}
 		return null;
-	}// selectStock
+	}
 
 	// 재고 개수 수정
 	public void updateStock(Milk newm) {
@@ -30,14 +30,14 @@ public class MilkModel {
 				break;
 			}
 		}
-	}// updateStock
+	}
 
 	// 재고유무확인
 	public boolean checkStock(Milk sellM) {
 		if (sellM.getStock() > 0) {
-			return true;
+			return true; //재고가 있으면
 		} else {
-			return false;
+			return false; //재고가 없으면
 		}
 	}
 
@@ -53,11 +53,8 @@ public class MilkModel {
 				for (int i = 0; i < db.milkV.size(); i++) {
 					totalStock += db.milkV.get(i).getStock();
 				}
-				if (totalStock==0) return true;
-				else return false;
+				if (totalStock==0) return true; //총재고가 없으면
+				else return false; //총재고가 있으면
 	}
-
-	
-
 
 }// class
