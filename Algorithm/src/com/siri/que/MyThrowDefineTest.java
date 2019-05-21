@@ -2,12 +2,10 @@ package com.siri.que;
 
 
 // runtimeException은 호출하는 곳에서 예외처리를 안해도 컴파일에러 없음.왜?
-
 class A{
 	
 	void hello(String name) {
 		//만약 name인자의 값이 null이라면 메소드를 문장들을 실행하지 않겠어!!
-		
 		if(name==null)
 		  throw new NullPointerException();
 		//강제 예외 발생!!, return문과 같이 메소드를 제어.
@@ -32,15 +30,15 @@ class My{
 		}
 	}
 }
+
 public class MyThrowDefineTest {
    public static void main(String[] args) {
       My m = new My();
         String str=null;
-        if(str==null) {
-        	System.out.println("# 이름을 반드시 입력하세요!");
-        	return;
-        }
+//        if(str==null) {
+//        	System.out.println("# 이름을 반드시 입력하세요!");
+//        	return;
+//        }
         m.callTest(str);
    }
 }
-
