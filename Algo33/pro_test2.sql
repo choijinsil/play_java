@@ -7,8 +7,8 @@
 	ename emp3.ename%type;
 	
 	begin
-		
-		if (select count(empno) from emp3 in (delName))
+		select ename into eenn from emp3;
+		if (eenn in (delName))
 		then delete from emp3 where ename = delName;
 		select count(empno) into x from emp3;
 		
